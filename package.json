@@ -10,6 +10,8 @@
     "test": "jest --runInBand --forceExit --colors --watchAll --coverage --verbose",
     "start": "node app.js",
     "dev": "./node_modules/.bin/nodemon app.js",
+    "migration:generate": "npx prisma migrate dev --create-only --name",
+    "migration:run": "npx prisma db push",
     "format": "prettier-eslint --write \"src/**/*.js\""
   },
   "keywords": [],
