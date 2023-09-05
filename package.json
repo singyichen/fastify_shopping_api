@@ -37,5 +37,8 @@
     "nodemon": "^3.0.1",
     "prettier": "3.0.3",
     "prettier-eslint-cli": "^7.1.0"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
   }
 }
