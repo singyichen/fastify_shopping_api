@@ -11,12 +11,13 @@ const fastifyRouterPlugin = require('./src/plugin/router');
 const fastifyEnvPlugin = require('./src/plugin/env');
 const fastifyLoggerPlugin = require('./src/plugin/logger');
 const fastifyJwtPlugin = require('./src/plugin/jwt');
+const fastifyCasbinPlugin = require('./src/plugin/casbin');
+
 function build() {
   // init app
   const app = fastify({
     // 使用 logger plugin
-    // logger: fastifyLoggerPlugin,
-    logger: true,
+    logger: fastifyLoggerPlugin,
   });
   /**
    * @description plugin
@@ -49,6 +50,8 @@ function build() {
   app.register(fastifyAuth);
   // jwt
   app.register(fastifyJwtPlugin);
+  // casbin
+  app.register(fastifyCasbinPlugin);
   // router
   app.register(fastifyRouterPlugin);
 
