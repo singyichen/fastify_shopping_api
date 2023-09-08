@@ -1,28 +1,70 @@
-'use strict'
+'use strict';
+/**
+ * @description import
+ */
+// import Dependencies
+const fastify = require('fastify');
+const fastifyAuth = require('@fastify/auth');
+// import plugin
+const fastifyCorsPlugin = require('./src/plugin/cors');
+const fastifyRouterPlugin = require('./src/plugin/router');
+const fastifyEnvPlugin = require('./src/plugin/env');
+const fastifyLoggerPlugin = require('./src/plugin/logger');
+const fastifyJwtPlugin = require('./src/plugin/jwt');
+function build() {
+  // init app
+  const app = fastify({
+    // 使用 logger plugin
+    // logger: fastifyLoggerPlugin,
+    logger: true,
+  });
+  /**
+   * @description plugin
+   */
+  // plugin
+  // 取得 .env 中的環境變數
+  app.register(fastifyEnvPlugin).after((err) => {
+    if (err) console.log(err);
+  });
+  app.register(fastifyCorsPlugin);
+  // 將 http 類型 log 寫入 info 日誌
+  app.addHook('onResponse', (request, reply, done) => {
+    fastifyLoggerPlugin.info({
+      request: {
+        method: request.method,
+        url: request.url,
+        user_agent: request.headers['user-agent'],
+        hostname: request.hostname,
+        remoteAddress: request.ip,
+        remotePort: request.socket.remotePort,
+      },
+      reply: {
+        statusCode: reply.statusCode,
+        statusMessage: reply.raw.statusMessage,
+      },
+    });
+    done();
+  });
+  // auth
+  app.register(fastifyAuth);
+  // jwt
+  app.register(fastifyJwtPlugin);
+  // router
+  app.register(fastifyRouterPlugin);
 
-const path = require('path')
-const AutoLoad = require('@fastify/autoload')
-
-// Pass --options via CLI arguments in command to enable these options.
-module.exports.options = {}
-
-module.exports = async function (fastify, opts) {
-  // Place here your custom code!
-
-  // Do not touch the following lines
-
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'plugins'),
-    options: Object.assign({}, opts)
-  })
-
-  // This loads all plugins defined in routes
-  // define your routes in one of these
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'routes'),
-    options: Object.assign({}, opts)
-  })
+  return app;
 }
+const server = build();
+// restful api server
+server.listen({ port: process.env.PORT, host: '0.0.0.0' }, function (err) {
+  console.log(
+    `Welcome to e_shopping_api app listening at http://${process.env.IP_ADDRESS}:${process.env.PORT}`,
+  );
+  if (err) {
+    // 紀錄全域狀態下的 error 到日誌
+    fastifyLoggerPlugin.error(err);
+    console.log(err);
+  }
+});
+module.exports.build = build;
+module.exports.server = server;
