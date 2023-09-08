@@ -27,36 +27,46 @@ const stream = Object.keys(levels).map((level) => {
     }),
   };
 });
-const logger = pino(
-  {
-    level: 'info', // must be the lowest level of all streams
-    customLevels: levels,
-    useOnlyCustomLevels: true,
-    // 日誌中的日期時間格式化
-    timestamp: () =>
-      `,"time":"${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}"`,
-    formatters: {
-      // 將 level 從數字轉成文字
-      level: (label) => {
-        return { level: label };
+function createLogger() {
+  const logger = pino(
+    {
+      level: 'info', // must be the lowest level of all streams
+      customLevels: levels,
+      useOnlyCustomLevels: true,
+      // 日誌中的日期時間格式化
+      timestamp: () =>
+        `,"time":"${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}"`,
+      formatters: {
+        // 將 level 從數字轉成文字
+        level: (label) => {
+          return { level: label };
+        },
       },
+      // 不記錄 pid，hostname
+      base: undefined,
+      // console log 顯示設定，目前無法跟寫入 log 同時運作
+      // transport: {
+      //   target: 'pino-pretty',
+      //   options: {
+      //     colorize: true,
+      //     translateTime: 'SYS:yyyy-mm-dd hh:MM:ss', // 格式化日期時間
+      //     ignore: 'pid',
+      //   },
+      // },
     },
-    // 不記錄 pid，hostname
-    base: undefined,
-    // console log 顯示設定，目前無法跟寫入 log 同時運作
-    // transport: {
-    //   target: 'pino-pretty',
-    //   options: {
-    //     colorize: true,
-    //     translateTime: 'SYS:yyyy-mm-dd hh:MM:ss', // 格式化日期時間
-    //     ignore: 'pid',
-    //   },
-    // },
-  },
-  pino.multistream(stream, {
-    levels,
-    dedupe: true, // Set this to true to send logs only to the stream with the higher level
-  }),
-);
+    pino.multistream(stream, {
+      levels,
+      dedupe: true, // Set this to true to send logs only to the stream with the higher level
+    }),
+  );
 
-module.exports = logger;
+  // Add the required functions to the logger instance
+  logger.debug = logger.debug || (() => {});
+  logger.fatal = logger.fatal || (() => {});
+  logger.warn = logger.warn || (() => {});
+  logger.trace = logger.trace || (() => {});
+
+  return logger;
+}
+
+module.exports = createLogger();
