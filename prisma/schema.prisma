@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         String    @id @default("10000")
+  name       String?   @default("")
+  token      String?   @default("")
+  email      String    @default("")
+  password   String    @default("")
+  created_at DateTime  @default(now())
+  updated_at DateTime? @default(now())
+}
+
+model CasbinRule {
+  id         Int       @id @default(autoincrement())
+  ptype      String
+  v0         String?
+  v1         String?
+  v2         String?
+  v3         String?
+  v4         String?
+  v5         String?
+  created_at DateTime  @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("casbin_rule")
+}
