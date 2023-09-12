@@ -6,10 +6,10 @@ const errorLogger = require('../plugin/logger');
 async function router(fastify, opts) {
   fastify.get('/', async function (request, reply) {
     try {
-      if (!(await fastify.casbin.enforce('alice', 'data1', 'write'))) {
+      const isAllowed = await fastify.casbin.enforce('11548', 'data1', 'read');
+      if (!isAllowed) {
         reply.send(new Error('Forbidden'));
       }
-      console.log(request);
       reply.send({ hello: 'world' });
     } catch (error) {
       errorLogger.error(error);
