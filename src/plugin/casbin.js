@@ -4,6 +4,7 @@
 
 const fastifyPlugin = require('fastify-plugin');
 const fastifyCasbin = require('fastify-casbin');
+const fastifyCasbinRest = require('fastify-casbin-rest');
 const { join } = require('path');
 const { PrismaAdapter } = require('casbin-prisma-adapter');
 const prismaClientService = require('../ormService/prismaClientService');
@@ -16,6 +17,7 @@ async function casbinConnector(fastify, opts, done) {
     adapter: adapter, // the adapter
   };
   fastify.register(fastifyCasbin, options);
+  fastify.register(fastifyCasbinRest);
 
   done();
 }
