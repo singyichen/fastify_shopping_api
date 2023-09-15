@@ -8,10 +8,10 @@ datasource db {
 }
 
 model user {
-  id         String    @id @default("10000")
+  id         String    @id @default(uuid())
+  email      String    @unique
   name       String?   @default("")
   token      String?   @default("")
-  email      String    @default("")
   password   String    @default("")
   created_at DateTime  @default(now())
   updated_at DateTime? @default(now())

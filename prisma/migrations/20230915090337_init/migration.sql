@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "user" (
-    "id" TEXT NOT NULL PRIMARY KEY DEFAULT '10000',
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "email" TEXT NOT NULL,
     "name" TEXT DEFAULT '',
     "token" TEXT DEFAULT '',
-    "email" TEXT NOT NULL DEFAULT '',
     "password" TEXT NOT NULL DEFAULT '',
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -22,3 +22,6 @@ CREATE TABLE "casbin_rule" (
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
