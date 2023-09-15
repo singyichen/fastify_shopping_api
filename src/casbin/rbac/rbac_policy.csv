@@ -3,8 +3,10 @@ p, bob, data2, write
 p, data2_admin, data2, read
 p, data2_admin, data2, write
 g, alice, data2_admin
-p, admin, data1, read
-p, admin, data1, write
-p, user, data1 , read
+p, user, / ,get
+p, manager, /addUser, post
 g, 11542, admin
 g, 11548, user
+g, 11284, manager
+g, manager, user
+p, admin, *, *
