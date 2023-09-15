@@ -8,8 +8,8 @@ async function router(fastify, opts) {
     casbin: {
       rest: {
         getSub: (request) => request.query.user_id,
-        getObj: 'data1',
-        getAct: 'read',
+        getObj: '/',
+        getAct: 'get',
       },
     },
     handler: async (request, reply) => {
