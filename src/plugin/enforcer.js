@@ -3,13 +3,11 @@
  */
 
 const { newEnforcer } = require('casbin');
-const { join } = require('path');
-const { PrismaAdapter } = require('casbin-prisma-adapter');
-const prismaClientService = require('../ormService/prismaClientService');
+const createCasbinConfig = require('../../config/casbinConfig');
+
 async function createEnforcer() {
-  const model = join(__dirname, '../casbin/rbac', 'rbac_model.conf');
-  const adapter = await PrismaAdapter.newAdapter(prismaClientService.prisma);
-  const enforcer = await newEnforcer(model, adapter);
+  const options = await createCasbinConfig();
+  const enforcer = await newEnforcer(options.model, options.adapter);
   return enforcer;
 }
 

@@ -5,18 +5,12 @@
 const fastifyPlugin = require('fastify-plugin');
 const fastifyCasbin = require('fastify-casbin');
 const fastifyCasbinRest = require('fastify-casbin-rest');
-const { join } = require('path');
-const { PrismaAdapter } = require('casbin-prisma-adapter');
-const prismaClientService = require('../ormService/prismaClientService');
 const { permissionDeniedInfo } = require('../utils/errorInfo');
 const errorLogger = require('../plugin/logger');
+const createCasbinConfig = require('../../config/casbinConfig');
+
 async function casbinConnector(fastify, opts, done) {
-  const model = join(__dirname, '../casbin/rbac', 'rbac_model.conf');
-  const adapter = await PrismaAdapter.newAdapter(prismaClientService.prisma);
-  const options = {
-    model: model, // the model configuration
-    adapter: adapter, // the adapter
-  };
+  const options = await createCasbinConfig();
   fastify.register(fastifyCasbin, options);
   fastify.register(fastifyCasbinRest, {
     onDeny: (reply, { sub, obj, act }) => {
