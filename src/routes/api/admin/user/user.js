@@ -7,6 +7,7 @@ const userSchema = require('../../../../modules/admin/user/validator/user');
 const findOneUserSchema = require('../../../../modules/admin/user/validator/findOneUser');
 const errorLogger = require('../../../../plugin/logger');
 const deleteUserSchema = require('../../../../modules/admin/user/validator/deleteUser');
+const findAllUserSchema = require('../../../../modules/admin/user/validator/findAllUser');
 const userController = new UserController();
 const {
   apiAdminUserUrl,
@@ -74,6 +75,10 @@ async function router(fastify, opts) {
    * @description 取得多筆人員路由( GET api/admin/user/findAll )
    */
   fastify.get('/findAll', {
+    // findAllUser 資料格式驗證
+    schema: {
+      query: findAllUserSchema,
+    },
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,

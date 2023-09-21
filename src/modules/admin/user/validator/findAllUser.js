@@ -1,7 +1,7 @@
 /**
- * @description findOneUser 資料格式驗證
+ * @description findAllUser 資料格式驗證
  */
-const findOneUserSchema = {
+const findAllUserSchema = {
   type: 'object',
   properties: {
     executor_id: {
@@ -12,4 +12,4 @@ const findOneUserSchema = {
   required: ['executor_id'],
 };
 
-module.exports = findOneUserSchema;
+module.exports = findAllUserSchema;
