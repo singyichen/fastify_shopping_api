@@ -9,7 +9,7 @@ const prefixApiAdminBasicUrl = prefixApiAdminUrl + '/basic';
 const prefixApiAdminUserUrl = prefixApiAdminUrl + '/user';
 const prefixApiAdminPermissionsUrl = prefixApiAdminUrl + '/permissions';
 const prefixApiAdminCustomerUrl = prefixApiAdminUrl + '/customer';
-
+const prefixApiAdminProductUrl = prefixApiAdminUrl + '/product';
 module.exports = {
   /**
    * @description backStage prefixUrl 基礎( /api/admin/basic )
@@ -104,4 +104,25 @@ module.exports = {
    * @description 取得多筆客戶( GET /api/admin/customer/findAll )
    */
   apiAdminCustomerFindAllUrl: prefixApiAdminUserUrl + '/findAll',
+
+  /**
+   * @description backStage prefixUrl 商品( /api/admin/product )
+   */
+  prefixApiAdminProductUrl,
+  /**
+   * @description 新增單筆商品( POST /api/admin/product )
+   */
+  apiAdminProductUrl: prefixApiAdminProductUrl,
+  /**
+   * @description 取得單筆商品( GET /api/admin/product/findOne )
+   */
+  apiAdminProductFindOneUrl: prefixApiAdminProductUrl + '/findOne',
+  /**
+   * @description 刪除單筆商品( DELETE /api/admin/product/delete )
+   */
+  apiAdminProductDeleteUrl: prefixApiAdminProductUrl + '/delete',
+  /**
+   * @description 取得多筆商品( GET /api/admin/product/findAll )
+   */
+  apiAdminProductFindAllUrl: prefixApiAdminProductUrl + '/findAll',
 };

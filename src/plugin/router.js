@@ -10,11 +10,13 @@ const adminBasicAPIRouter = require('../routes/api/admin/basic/basic');
 const adminUserAPIRouter = require('../routes/api/admin/user/user');
 const adminPermissionsAPIRouter = require('../routes/api/admin/permissions/permissions');
 const adminCustomerAPIRouter = require('../routes/api/admin/customer/customer');
+const adminProductAPIRouter = require('../routes/api/admin/product/product');
 const {
   prefixApiAdminBasicUrl,
   prefixApiAdminUserUrl,
   prefixApiAdminPermissionsUrl,
   prefixApiAdminCustomerUrl,
+  prefixApiAdminProductUrl,
 } = require('../utils/url');
 
 async function routerConnector(fastify, opts, done) {
@@ -39,6 +41,11 @@ async function routerConnector(fastify, opts, done) {
   fastify.register(adminCustomerAPIRouter, {
     prefix: prefixApiAdminCustomerUrl,
   });
+  // 商品( product )
+  fastify.register(adminProductAPIRouter, {
+    prefix: prefixApiAdminProductUrl,
+  });
+
   done();
 }
 
