@@ -9,14 +9,10 @@ const {
   createCustomerFailedCustomerIsExistInfo,
 } = require('../../../../utils/errorInfo');
 const { StatusCodes } = require('http-status-codes');
-const PermissionsService = require('../../permissions/service/permissionsService');
 /**
  * @description customer service
  */
 class CustomerService {
-  constructor() {
-    this.permissionsService = new PermissionsService();
-  }
   /**
    * @description 新增單筆客戶
    * @param { string } email 電郵
