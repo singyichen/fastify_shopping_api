@@ -5,10 +5,40 @@
 const fastifyPlugin = require('fastify-plugin');
 // import routes
 const rootRouter = require('../routes/root');
+// backStage
+const adminBasicAPIRouter = require('../routes/api/admin/basic/basic');
+const adminUserAPIRouter = require('../routes/api/admin/user/user');
+const adminPermissionsAPIRouter = require('../routes/api/admin/permissions/permissions');
+const adminCustomerAPIRouter = require('../routes/api/admin/customer/customer');
+const {
+  prefixApiAdminBasicUrl,
+  prefixApiAdminUserUrl,
+  prefixApiAdminPermissionsUrl,
+  prefixApiAdminCustomerUrl,
+} = require('../utils/url');
+
 async function routerConnector(fastify, opts, done) {
   // 初始化路由
   fastify.register(rootRouter);
-
+  /**
+   * @description 後台( backStage )
+   */
+  // 基礎( basic )
+  fastify.register(adminBasicAPIRouter, {
+    prefix: prefixApiAdminBasicUrl,
+  });
+  // 人員( user )
+  fastify.register(adminUserAPIRouter, {
+    prefix: prefixApiAdminUserUrl,
+  });
+  // 權限( permissions )
+  fastify.register(adminPermissionsAPIRouter, {
+    prefix: prefixApiAdminPermissionsUrl,
+  });
+  // 客戶( customer )
+  fastify.register(adminCustomerAPIRouter, {
+    prefix: prefixApiAdminCustomerUrl,
+  });
   done();
 }
 
