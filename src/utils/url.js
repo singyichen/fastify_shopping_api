@@ -7,7 +7,8 @@
 const prefixApiAdminUrl = '/api/admin';
 const prefixApiAdminBasicUrl = prefixApiAdminUrl + '/basic';
 const prefixApiAdminUserUrl = prefixApiAdminUrl + '/user';
-const prefixApiAdminPermissionsAgentUrl = prefixApiAdminUrl + '/permissions';
+const prefixApiAdminPermissionsUrl = prefixApiAdminUrl + '/permissions';
+const prefixApiAdminCustomerUrl = prefixApiAdminUrl + '/customer';
 
 module.exports = {
   /**
@@ -51,35 +52,56 @@ module.exports = {
   /**
    * @description backStage prefixUrl 權限( /api/admin/permissions )
    */
-  prefixApiAdminPermissionsAgentUrl,
+  prefixApiAdminPermissionsUrl,
   /**
    * @description 取得多筆人員角色( GET /api/admin/permissions/getUsersForRole )
    */
   apiAdminPermissionsGetUsersForRoleUrl:
-    prefixApiAdminPermissionsAgentUrl + '/getUsersForRole',
+    prefixApiAdminPermissionsUrl + '/getUsersForRole',
   /**
    * @description 新增單筆人員角色( POST /api/admin/permissions/addRoleForUser )
    */
   apiAdminPermissionsAddRoleForUserUrl:
-    prefixApiAdminPermissionsAgentUrl + '/addRoleForUser',
+    prefixApiAdminPermissionsUrl + '/addRoleForUser',
   /**
    * @description 刪除單筆人員角色( DELETE /api/admin/permissions/deleteRoleForUser )
    */
   apiAdminPermissionsDeleteRoleForUserUrl:
-    prefixApiAdminPermissionsAgentUrl + '/deleteRoleForUser',
+    prefixApiAdminPermissionsUrl + '/deleteRoleForUser',
   /**
    * @description 取得多筆角色權限( GET /api/admin/permissions/getPermissionsForUser )
    */
   apiAdminPermissionsGetPermissionsForUserUrl:
-    prefixApiAdminPermissionsAgentUrl + '/getPermissionsForUser',
+    prefixApiAdminPermissionsUrl + '/getPermissionsForUser',
   /**
    * @description 新增單筆人員角色( POST /api/admin/permissions/addPermissionForUser )
    */
   apiAdminPermissionsAddPermissionForUserUrl:
-    prefixApiAdminPermissionsAgentUrl + '/addPermissionForUser',
+    prefixApiAdminPermissionsUrl + '/addPermissionForUser',
   /**
    * @description 刪除單筆人員角色( DELETE /api/admin/permissions/deletePermissionForUser )
    */
   apiAdminPermissionsDeletePermissionForUserUrl:
-    prefixApiAdminPermissionsAgentUrl + '/deletePermissionForUser',
+    prefixApiAdminPermissionsUrl + '/deletePermissionForUser',
+
+  /**
+   * @description backStage prefixUrl 客戶( /api/admin/customer )
+   */
+  prefixApiAdminCustomerUrl,
+  /**
+   * @description 新增單筆客戶( POST /api/admin/customer )
+   */
+  apiAdminCustomerUrl: prefixApiAdminUserUrl,
+  /**
+   * @description 取得單筆客戶( GET /api/admin/customer/findOne )
+   */
+  apiAdminCustomerFindOneUrl: prefixApiAdminUserUrl + '/findOne',
+  /**
+   * @description 刪除單筆客戶( DELETE /api/admin/customer/delete )
+   */
+  apiAdminCustomerDeleteUrl: prefixApiAdminUserUrl + '/delete',
+  /**
+   * @description 取得多筆客戶( GET /api/admin/customer/findAll )
+   */
+  apiAdminCustomerFindAllUrl: prefixApiAdminUserUrl + '/findAll',
 };

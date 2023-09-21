@@ -132,4 +132,13 @@ module.exports = {
     error: getReasonPhrase(StatusCodes.FORBIDDEN),
     message: '無訪問權限。',
   },
+  /**
+   * @description 客戶已存在，勿重複新增。
+   */
+  createCustomerFailedCustomerIsExistInfo: {
+    statusCode: StatusCodes.EXPECTATION_FAILED,
+    code: 41707,
+    error: getReasonPhrase(StatusCodes.EXPECTATION_FAILED),
+    message: '客戶已存在，勿重複新增。',
+  },
 };
