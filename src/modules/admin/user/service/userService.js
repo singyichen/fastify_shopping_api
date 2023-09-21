@@ -93,7 +93,7 @@ class UserService {
   }
   /**
    * @description 取得單筆人員
-   * @param { string } userID 人員 ID
+   * @param { string } email 人員 電郵
    * @returns { Object } JSON
    */
   async findOne(email) {
