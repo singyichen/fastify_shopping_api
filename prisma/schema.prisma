@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 後台使用者資料表（user）
 model user {
   id         String    @id @default(uuid())
   email      String    @unique
@@ -17,6 +18,7 @@ model user {
   updated_at DateTime? @default(now())
 }
 
+// 權限資料表（CasbinRule）
 model CasbinRule {
   id         Int       @id @default(autoincrement())
   ptype      String
@@ -30,4 +32,42 @@ model CasbinRule {
   updated_at DateTime? @default(now())
 
   @@map("casbin_rule")
+}
+
+// 客戶資料表（Customers）
+model customer {
+  id      Int     @id @default(autoincrement())
+  name    String
+  email   String  @unique
+  address String
+  orders  order[]
+}
+
+// 訂單資料表（Orders）
+model order {
+  id          Int         @id @default(autoincrement())
+  customer    customer    @relation(fields: [customerId], references: [id])
+  customerId  Int
+  orderDate   DateTime    @default(now())
+  totalAmount Float
+  orderItems  orderItem[]
+}
+
+// 商品資料表（Products）
+model product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  orderItems  orderItem[]
+}
+
+// 訂單項目資料表（OrderItems）
+model orderItem {
+  id        Int     @id @default(autoincrement())
+  order     order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   product @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
 }
