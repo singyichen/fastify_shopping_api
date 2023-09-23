@@ -26,6 +26,35 @@ class OrderItemService {
       };
       const data =
         await prismaClientService.prisma.orderItem.create(insertData);
+      const productData = await prismaClientService.prisma.product.findUnique({
+        select: {
+          id: true,
+          name: true,
+          price: true,
+        },
+        where: {
+          id: +productId,
+        },
+      });
+      const productPrice = +productData.price * +quantity;
+      const orderData = await prismaClientService.prisma.order.findUnique({
+        select: {
+          id: true,
+          totalAmount: true,
+        },
+        where: {
+          id: +orderId,
+        },
+      });
+      const totalAmount = +orderData.totalAmount + productPrice;
+      const updateOrderData = await prismaClientService.prisma.order.update({
+        where: {
+          id: +orderId,
+        },
+        data: {
+          totalAmount: totalAmount,
+        },
+      });
       return new SuccessResponse(StatusCodes.OK, data, twDateTimeData);
     } catch (error) {
       errorLogger.error(error);
@@ -40,9 +69,51 @@ class OrderItemService {
   async delete(id) {
     try {
       const twDateTimeData = (await dateTimeApi()).data;
+      const orderItemData =
+        await prismaClientService.prisma.orderItem.findUnique({
+          select: {
+            id: true,
+            orderId: true,
+            productId: true,
+            quantity: true,
+          },
+          where: {
+            id: +id,
+          },
+        });
       const data = await prismaClientService.prisma.orderItem.delete({
         where: {
           id: +id,
+        },
+      });
+      const { orderId, productId, quantity } = orderItemData;
+      const productData = await prismaClientService.prisma.product.findUnique({
+        select: {
+          id: true,
+          name: true,
+          price: true,
+        },
+        where: {
+          id: +productId,
+        },
+      });
+      const productPrice = +productData.price * +quantity;
+      const orderData = await prismaClientService.prisma.order.findUnique({
+        select: {
+          id: true,
+          totalAmount: true,
+        },
+        where: {
+          id: +orderId,
+        },
+      });
+      const totalAmount = +orderData.totalAmount - productPrice;
+      const updateOrderData = await prismaClientService.prisma.order.update({
+        where: {
+          id: +orderId,
+        },
+        data: {
+          totalAmount: totalAmount,
         },
       });
       return new SuccessResponse(StatusCodes.OK, data, twDateTimeData);
