@@ -11,6 +11,7 @@ const prefixApiAdminPermissionsUrl = prefixApiAdminUrl + '/permissions';
 const prefixApiAdminCustomerUrl = prefixApiAdminUrl + '/customer';
 const prefixApiAdminProductUrl = prefixApiAdminUrl + '/product';
 const prefixApiAdminOrderItemUrl = prefixApiAdminUrl + '/orderItem';
+const prefixApiAdminOrderUrl = prefixApiAdminUrl + '/order';
 module.exports = {
   /**
    * @description backStage prefixUrl 基礎( /api/admin/basic )
@@ -147,4 +148,25 @@ module.exports = {
    * @description 取得多筆訂單項目( GET /api/admin/orderItem/findAll )
    */
   apiAdminOrderItemFindAllUrl: prefixApiAdminOrderItemUrl + '/findAll',
+
+  /**
+   * @description backStage prefixUrl 訂單( /api/admin/order )
+   */
+  prefixApiAdminOrderUrl,
+  /**
+   * @description 新增單筆訂單( POST /api/admin/order )
+   */
+  apiAdminOrderUrl: prefixApiAdminOrderUrl,
+  /**
+   * @description 取得單筆訂單( GET /api/admin/order/findOne )
+   */
+  apiAdminOrderFindOneUrl: prefixApiAdminOrderUrl + '/findOne',
+  /**
+   * @description 刪除單筆訂單( DELETE /api/admin/order/delete )
+   */
+  apiAdminOrderDeleteUrl: prefixApiAdminOrderUrl + '/delete',
+  /**
+   * @description 取得多筆訂單( GET /api/admin/order/findAll )
+   */
+  apiAdminOrderFindAllUrl: prefixApiAdminOrderUrl + '/findAll',
 };
