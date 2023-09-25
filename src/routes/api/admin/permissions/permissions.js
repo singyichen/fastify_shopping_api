@@ -31,6 +31,8 @@ async function router(fastify, opts) {
     schema: {
       query: getPermissionsForUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,
@@ -57,6 +59,8 @@ async function router(fastify, opts) {
     schema: {
       body: addPermissionForUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -83,6 +87,8 @@ async function router(fastify, opts) {
     schema: {
       body: deletePermissionForUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -110,6 +116,8 @@ async function router(fastify, opts) {
     schema: {
       query: getUsersForRoleSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,
@@ -136,6 +144,8 @@ async function router(fastify, opts) {
     schema: {
       body: addRoleForUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -162,6 +172,8 @@ async function router(fastify, opts) {
     schema: {
       body: deleteRoleForUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,

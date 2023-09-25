@@ -27,6 +27,8 @@ async function router(fastify, opts) {
     schema: {
       body: orderItemSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -53,6 +55,8 @@ async function router(fastify, opts) {
     schema: {
       body: deleteOrderItemSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -79,6 +83,8 @@ async function router(fastify, opts) {
     schema: {
       query: findAllOrderItemSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,
@@ -105,6 +111,8 @@ async function router(fastify, opts) {
     schema: {
       query: findOneOrderItemSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,

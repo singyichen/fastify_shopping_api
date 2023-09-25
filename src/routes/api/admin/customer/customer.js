@@ -27,6 +27,8 @@ async function router(fastify, opts) {
     schema: {
       body: customerSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
