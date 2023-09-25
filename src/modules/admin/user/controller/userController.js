@@ -63,6 +63,20 @@ class UserController extends BaseController {
       console.log(error);
     }
   }
+  /**
+   * @description 編輯單筆人員
+   * @param { Object } request 請求
+   * @returns { Object } json
+   */
+  async update(request) {
+    try {
+      const { id, email, name, password } = request.body;
+      return await this.userService.update(id, email, name, password);
+    } catch (error) {
+      errorLogger.error(error);
+      console.log(error);
+    }
+  }
 }
 
 module.exports = UserController;

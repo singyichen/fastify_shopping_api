@@ -50,6 +50,10 @@ module.exports = {
    * @description 取得多筆人員( GET /api/admin/user/findAll )
    */
   apiAdminUserFindAllUrl: prefixApiAdminUserUrl + '/findAll',
+  /**
+   * @description 編輯單筆人員( PATCH /api/admin/user/update )
+   */
+  apiAdminUserUpdateUrl: prefixApiAdminUserUrl + '/update',
 
   /**
    * @description backStage prefixUrl 權限( /api/admin/permissions )

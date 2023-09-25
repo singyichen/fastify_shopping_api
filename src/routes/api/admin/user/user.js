@@ -8,12 +8,14 @@ const findOneUserSchema = require('../../../../modules/admin/user/validator/find
 const errorLogger = require('../../../../plugin/logger');
 const deleteUserSchema = require('../../../../modules/admin/user/validator/deleteUser');
 const findAllUserSchema = require('../../../../modules/admin/user/validator/findAllUser');
+const updateOneUserSchema = require('../../../../modules/admin/user/validator/updateOneUser');
 const userController = new UserController();
 const {
   apiAdminUserUrl,
   apiAdminUserDeleteUrl,
   apiAdminUserFindAllUrl,
   apiAdminUserFindOneUrl,
+  apiAdminUserUpdateUrl,
 } = require('../../../../utils/url');
 /**
  * @description 人員路由( api/admin/user )
@@ -27,6 +29,8 @@ async function router(fastify, opts) {
     schema: {
       body: userSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -53,6 +57,8 @@ async function router(fastify, opts) {
     schema: {
       body: deleteUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.body.executor_id,
@@ -79,6 +85,8 @@ async function router(fastify, opts) {
     schema: {
       query: findAllUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,
@@ -105,6 +113,8 @@ async function router(fastify, opts) {
     schema: {
       query: findOneUserSchema,
     },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
     casbin: {
       rest: {
         getSub: (request) => request.query.executor_id,
@@ -115,6 +125,34 @@ async function router(fastify, opts) {
     handler: async (request, reply) => {
       try {
         const res = await userController.findOne(request);
+        reply.send(res);
+      } catch (error) {
+        errorLogger.error(error);
+        reply.send({ status: -1, message: error.message });
+        console.log(error);
+      }
+    },
+  });
+  /**
+   * @description 編輯單筆人員路由( PATCH api/admin/user/update )
+   */
+  fastify.patch('/update', {
+    // updateOneUser 資料格式驗證
+    schema: {
+      body: updateOneUserSchema,
+    },
+    // JWT 驗證
+    preHandler: fastify.auth([fastify.verifyJWT]),
+    casbin: {
+      rest: {
+        getSub: (request) => request.body.executor_id,
+        getObj: apiAdminUserUpdateUrl,
+        getAct: 'update',
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const res = await userController.update(request);
         reply.send(res);
       } catch (error) {
         errorLogger.error(error);
