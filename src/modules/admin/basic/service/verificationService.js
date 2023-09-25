@@ -24,7 +24,7 @@ const CryptoJS = require('crypto-js');
  */
 class VerificationService {
   /**
-   * @description 使用 SHA512 對明文密碼進行哈希並加鹽處理
+   * @description 使用 SHA512 對明文密碼進行雜湊並加鹽處理
    * @param { string } password 密碼
    * @returns { string } bcryptHash 加鹽過後的密碼
    */
@@ -33,9 +33,9 @@ class VerificationService {
       // 生成一個用於每個用戶的鹽
       // 成本因子可以根據你的需求進行調整，鹽的複雜度，數字越高，加密強度越高，但處理時間也越長
       const salt = bcrypt.genSaltSync(10);
-      // 使用 SHA512 對明文密碼進行哈希
+      // 使用 SHA512 對明文密碼進行雜湊
       const sha512Hash = CryptoJS.SHA512(password).toString();
-      // 將明文密碼的 SHA512 哈希值和鹽值進行哈希加密，得到加鹽過後的密碼
+      // 將明文密碼的 SHA512 雜湊值和鹽值進行雜湊加密，得到加鹽過後的密碼
       const bcryptHash = await bcrypt.hash(sha512Hash, salt);
       return bcryptHash;
     } catch (error) {
@@ -118,14 +118,14 @@ class VerificationService {
           email: email,
         },
       });
-      // 解密過後的哈希值（從 DB 中取得的加密密碼）
+      // 解密過後的雜湊值（從 DB 中取得的加密密碼）
       const decryptedHash = this.decryptWithAES256(
         userData.password,
         process.env.PEPPER,
       );
-      // 將明文密碼轉換為 SHA512 哈希值
+      // 將明文密碼轉換為 SHA512 雜湊值
       const sha512Hash = CryptoJS.SHA512(password).toString();
-      // 將使用者輸入的哈希值與解密後的哈希值進行比較
+      // 將使用者輸入的雜湊值與解密後的雜湊值進行比較
       const isMatch = bcrypt.compareSync(sha512Hash, decryptedHash);
       return isMatch;
     } catch (error) {
