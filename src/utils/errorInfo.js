@@ -141,4 +141,22 @@ module.exports = {
     error: getReasonPhrase(StatusCodes.EXPECTATION_FAILED),
     message: '客戶已存在，勿重複新增。',
   },
+  /**
+   * @description 此電郵已被使用，請輸入其他電郵。
+   */
+  updateUserFailedEmailIsExistInfo: {
+    statusCode: StatusCodes.EXPECTATION_FAILED,
+    code: 41708,
+    error: getReasonPhrase(StatusCodes.EXPECTATION_FAILED),
+    message: '此電郵已被使用，請輸入其他電郵。',
+  },
+  /**
+   * @description 帳號或密碼錯誤，請重新嘗試。
+   */
+  registerUserIDOrPasswordNotCorrectInfo: {
+    statusCode: StatusCodes.UNAUTHORIZED,
+    code: 40109,
+    error: getReasonPhrase(StatusCodes.UNAUTHORIZED),
+    message: '帳號或密碼錯誤，請重新嘗試。',
+  },
 };
