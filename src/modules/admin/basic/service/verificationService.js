@@ -45,9 +45,9 @@ class VerificationService {
   }
 
   /**
-   * @description 使用 AES256 和一個秘密的值 pepper 對 bcryptHash 進行加密
+   * @description 使用 AES256 和一個密鑰 對 bcryptHash 進行加密
    * @param { string } bcryptHash 加鹽過後的密碼
-   * @param { string } pepper 秘密的值 pepper
+   * @param { string } pepper 密鑰
    * @returns { string } encryptedHash 加密過後的加鹽密碼
    */
   async encryptWithAES256(bcryptHash, pepper) {
@@ -85,9 +85,9 @@ class VerificationService {
   }
 
   /**
-   * @description 使用 pepper 對 bcryptHash 進行解密
+   * @description 使用密鑰對 bcryptHash 進行解密
    * @param { string } encryptedHash 加密過後的加鹽密碼
-   * @param { string } pepper 秘密的值 pepper
+   * @param { string } pepper 密鑰
    * @returns { string } decryptedHash 解密過後的加鹽密碼
    */
   decryptWithAES256(encryptedHash, pepper) {
