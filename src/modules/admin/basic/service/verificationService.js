@@ -30,11 +30,11 @@ class VerificationService {
    */
   async encryptWithSHA512(password) {
     try {
+      // 使用 SHA512 對明文密碼進行雜湊
+      const sha512Hash = CryptoJS.SHA512(password).toString();
       // 生成一個用於每個用戶的鹽
       // 成本因子可以根據你的需求進行調整，鹽的複雜度，數字越高，加密強度越高，但處理時間也越長
       const salt = bcrypt.genSaltSync(10);
-      // 使用 SHA512 對明文密碼進行雜湊
-      const sha512Hash = CryptoJS.SHA512(password).toString();
       // 將明文密碼的 SHA512 雜湊值和鹽值進行雜湊加密，得到加鹽過後的密碼
       const bcryptHash = await bcrypt.hash(sha512Hash, salt);
       return bcryptHash;
@@ -45,7 +45,7 @@ class VerificationService {
   }
 
   /**
-   * @description 使用 AES256 和一個密鑰 對 bcryptHash 進行加密
+   * @description 使用 AES256 和一個密鑰對 bcryptHash 進行加密
    * @param { string } bcryptHash 加鹽過後的密碼
    * @param { string } pepper 密鑰
    * @returns { string } encryptedHash 加密過後的加鹽密碼
