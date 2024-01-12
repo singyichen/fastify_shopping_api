@@ -265,7 +265,7 @@ According to the script for volume mount `-v /var/log/fastify_shopping_api:/src/
 │  │                user.js
 │  │                deleteUser.js
 │  │                findAllUser.js
-│  │     │          findOneUser.js
+│  │                findOneUser.js
 │  │                updateOneUser.js
 │  │
 │  ├─ormService
